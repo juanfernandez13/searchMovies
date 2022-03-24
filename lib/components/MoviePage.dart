@@ -20,6 +20,7 @@ class MoviePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: Text(movie['Title']),
       ),
       body: Column(
@@ -50,7 +51,14 @@ class MoviePage extends StatelessWidget {
                                                   top: 20,
                                                   bottom: 20),
                                               width: MediaQuery.of(context).size.width * 0.55,
-                                              child: Image.network(movie['Poster']),
+                                              child: movie['Poster'] == "N/A" || movie['Poster'] == null?
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 15),
+                                                child: Card(
+                                                  color:Colors.green,
+                                                  child: Image.asset("assets/imageSadSmile.png"),
+                                                ),
+                                              ) : Image.network(movie['Poster']),
                                             )),
                                       ],
                                     ),
@@ -137,7 +145,14 @@ class MoviePage extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.only(left: 15, right: 10, top: 20, bottom: 20),
                     width: MediaQuery.of(context).size.width * 0.55,
-                    child: Image.network(movie['Poster']),
+                    child: movie['Poster'] == "N/A" || movie['Poster'] == null?
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Card(
+                        color:Colors.green,
+                        child: Image.asset("assets/imageSadSmile.png"),
+                      ),
+                    ) : Image.network(movie['Poster']),
                   )),
               Container(
                 margin: EdgeInsets.only(top: 20),
@@ -145,13 +160,16 @@ class MoviePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    rowText("Imdb rating: ${snapshot.data["imdbRating"]}"),
-                    rowText("Director: ${snapshot.data["Director"]}"),
-                    rowText("Released: ${snapshot.data["Released"]}"),
-                    rowText("Genre: ${snapshot.data["Genre"]}"),
-                    rowText("Runtime: ${snapshot.data["Runtime"]}"),
-                    rowText("Writer: ${snapshot.data["Writer"]}"),
-                    rowText("Type: ${snapshot.data["Type"]}"),
+
+                     rowText("Imdb rating: ", snapshot.data["imdbRating"] == null? "não informado": snapshot.data["imdbRating"]),
+                     rowText("Director: ", snapshot.data["Director"] == null? "não informado": snapshot.data["Director"]),
+                     rowText("Released: ", snapshot.data["Released"] == null? "não informado": snapshot.data["Released"]),
+                     rowText("Genre: ", snapshot.data["Genre"] == null? "não informado": snapshot.data["Genre"]),
+                     rowText("Runtime: ", snapshot.data["Runtime"] == null? "não informado": snapshot.data["Runtime"]),
+                     rowText("Writer: ", snapshot.data["Writer"] == null? "não informado": snapshot.data["Writer"]),
+                     rowText("Type: ", snapshot.data["Type"] == null? "não informado": snapshot.data["Type"]),
+
+
                   ],
                 ),
               ),
@@ -177,7 +195,7 @@ class MoviePage extends StatelessWidget {
               thumbColor: Colors.green,
               child: SingleChildScrollView(
                 child: Text(
-                  snapshot.data['Plot'],
+                  snapshot.data["Plot"] == "N/A" || snapshot.data["Plot"] == null ? "Não informado" : snapshot.data["Plot"],
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -208,11 +226,13 @@ class MoviePage extends StatelessWidget {
     );
   }
 
-  Widget rowText(String text) {
+  Widget rowText(String text, String text2) {
+    if(text2 == "N/A" || text2 == null) text2 = "Não informado";
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(
-        text,
+        text+text2,
         style: TextStyle(color: Colors.white),
       ),
     );

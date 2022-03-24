@@ -26,9 +26,6 @@ class _HomePageState extends State<HomePage> {
     ScrollController _controller3 = ScrollController();
     ScrollController _controller4 = ScrollController();
 
-
-    TextEditingController _controllerText = TextEditingController();
-
     Future<Map> _getMovies() async {
       http.Response response;
         response = await http.get(Uri.parse(
@@ -37,12 +34,11 @@ class _HomePageState extends State<HomePage> {
         return json.decode(response.body);
     }
 
-
-
     @override
     void initState() {
       _controller2.addListener(() {
         maxValue = _controller2.position.maxScrollExtent;
+
       });
 
       offset = maxValue;
@@ -86,9 +82,8 @@ class _HomePageState extends State<HomePage> {
                     animatedListMovie(8, _controller2,_movieIsempty),
 
                     TextField(
-                      controller: _controllerText,
                       onSubmitted: (text) => setState(() {
-                        movie = _controllerText.text;
+                        movie = text;
                         _movieIsempty = movie == null || movie == '';
                       }),
                       style: TextStyle(color: Colors.white),

@@ -81,6 +81,7 @@ class _GridMoviesState extends State<GridMovies> {
       width: double.infinity,
       color: Colors.green[700],
       child:  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             height: 150,
@@ -111,7 +112,14 @@ class _GridMoviesState extends State<GridMovies> {
               },
               child: Hero(
                 tag: snapshot.data['Search'][index]['Poster'],
-                child: Image.network(snapshot.data["Search"][index]['Poster']),
+                child: snapshot.data['Search'][index]['Poster'] == "N/A" || snapshot.data['Search'][index]['Poster'] == null?
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Card(
+                    color:Colors.green,
+                    child: Image.asset("assets/imageSadSmile.png"),
+                  ),
+                ) : Image.network(snapshot.data["Search"][index]['Poster']),
               ),
             );
           }),
